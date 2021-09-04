@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Financeira</title>
+</head>
+<body>
+    <h1>Calculo de média de lucros</h1>
+    
+    <div id="item_1" style="display: block;">
+        <h2>Insira os dados:</h2>
+        <div id="values">
+            <label for="date_mes_1">Data:</label> <input type="text" name="date_mes_1" id="date_mes_1">
+            <label for="vlr_mes_1">Digite o valor</label><input type="text" name="vlr_mes_1" id="vlr_mes_1"><br>
+            <label for="date_mes_2">Data:</label> <input type="text" name="date_mes_2" id="date_mes_2">
+            <label for="vlr_mes_2">Digite o valor</label><input type="text" name="vlr_mes_2" id="vlr_mes_2"><br>
+        
+        </div>
+        <input type="button" value="Quer adicionar mais um valor?" onclick="adicionar()">
+        <input type="button" value="Valores" onclick="calculo_media_valor()">
+    </div>
+    <div id="item_2" style="display: none;">
+        <p>o valor médio entre o periodo de <b id="mes_primeiro"></b> e <b id="mes_ultimo"></b> é de: <span id="valor_total"></span></p>
+    </div>
+</body>
+</html>
+<script>
+
+    let dates = 2;
+
+    const values = document.getElementById("values")
+    const mes_1 = document.getElementById("date_mes_1")
+    const mes_2 = document.getElementById("date_mes_2")
+    const item_1 = document.getElementById("item_1")
+    const item_2 = document.getElementById("item_2")
+    const valores = [];
+    
+    var qtd = 0;
+
+    const show_mes_primeiro = document.getElementById("mes_primeiro")
+    const show_mes_ultimo = document.getElementById("mes_ultimo")
+    const show_valor_total = document.getElementById("valor_total")
+    
+    function adicionar() {
+        dates ++;
+        var dates_vlr = '<label for="vlr_mes'+dates+'">Digite o valor:</label><input type="text" name="vlr_mes_'+dates+'" id="vlr_mes_'+dates+'">'
+        var dates_mes = '<label for="date_mes_'+dates+'">Data:</label> <input type="text" name="date_mes_'+dates+'" id="date_mes_'+dates+'">'
+        values.innerHTML += dates_mes + dates_vlr + '<br>'
+    }
+
+    function calculo_media_valor(){
+
+        let v_media_1 = 0;
+
+        for (let index = 0; index < dates; index++) {
+            var ind = index + 1
+            valores[index] = Number(document.getElementById('vlr_mes_'+ind+'').value)
+            v_media_1 += valores[index]
+            qtd ++;
+        }
+
+        var media = Number(v_media_1 / qtd)
+
+        var date_mes_ultimo = document.getElementById('date_mes_'+valores.length+'').value
+        var date_mes_primeiro = document.getElementById('date_mes_1').value
+
+        item_1.style.display = 'none'
+        item_2.style.display = 'block'
+
+        show_mes_primeiro.innerHTML = date_mes_primeiro
+        show_mes_ultimo.innerHTML = date_mes_ultimo
+        show_valor_total.innerHTML = media.toFixed(2)
+
+    }
+
+</script>
